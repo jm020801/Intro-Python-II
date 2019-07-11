@@ -1,13 +1,15 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
-
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, starting_room):
         self.name = name
-        self.current_room = current_room
-
-    def __str__(self):
-        return f'name: {self.name}, room: {self.current_room}'
-
-    name = str
-    current_room = str
+        self.current_room = starting_room
+    def travel(self, direction):
+        # Check if there's a valid room in the direction
+        if getattr(self.current_room, f"{direction}_to") is not None:
+            # If so, update current_room to new room and print description
+            self.current_room = getattr(self.current_room, f"{direction}_to")
+            print(self.current_room)
+        else:
+            # Else print an error message
+            print("Sorry! there's no room here.", "\n")

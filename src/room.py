@@ -1,23 +1,17 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-# title and description
-
-# create your constructor
-
-# have parameters with the cardinal directions
-
 class Room:
-    def __init__(self, name, description):
-        self.name = name
+    def __init__(self, title, description):
+        self.title = title
         self.description = description
-
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
     def __str__(self):
-        return f'room: {self.name}, description: {self.description}'
-
-    name = str
-    description = str
-    n_to = str
-    s_to = str
-    e_to = str
-    w_to = str
+        str = f"""
+            \n----------------------------------
+            \n{self.title}
+            \n   {self.description}\n"""
+        return str
