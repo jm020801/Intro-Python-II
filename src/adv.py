@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -49,3 +51,69 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+rock = Item("Rock", "This is a rock.")
+sword = Item("Sword", "This a sword")
+
+sandwich = Item("Sandwich", "This is a tasty sandwich.")
+apple = Item("Apple", "This is a delicious red apple.")
+
+blanket = Item("Blanket", "A blanket to keep you warm.")
+nugget = Item("Nugget", "A small shiny gold piece")
+
+
+player = Player("Jarrad", room['outside'])
+
+#make it so that the player can pick up items from a room instead of hard coding
+
+room["outside"].items.append(rock)
+room["foyer"].items.append(blanket)
+room["overlook"].items.append(sword)
+room["narrow"].items.append(sandwich)
+room["treasure"].items.append(nugget)
+room["outside"].items.append(apple)
+
+player.items.append(sandwich)
+
+
+current_room = player.current_room
+
+print(current_room)
+
+
+valid_inputs = ["n", "s", "e", "w", "q", "i", "get", "drop"]
+
+while True:
+    # Wait for user input
+    cmd = input("-> ")
+    # Parse user inputs (n, s, e, w, q, i, get, drop)
+    if cmd in valid_inputs:
+        # If input is valid, move the player and loop
+        player.travel(cmd)
+    elif cmd == "i":
+        player.print_inventory()
+    elif cmd == "q":
+        print("Goodbye!")
+        exit()
+
+    elif cmd == "get":
+        item = player.current_room.get_item(cmd)
+        if item == None:
+            print("That item is not in the room.")
+        else:
+            player.current_room.items.remove(item)
+            player.items.append(item)
+            item.on_take()
+
+    elif cmd == "drop":
+        item = player.get_item(cmd)
+        if item == None:
+            print("That item is not in your inventory.")
+        else:
+            player.current_room.items.append(item)
+            player.items.remove(item)
+            item.on_drop()
+
+    else:
+        print("I did not recognize that command") 
